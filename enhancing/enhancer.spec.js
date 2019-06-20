@@ -2,7 +2,7 @@ const enhancer = require('./enhancer.js');
 // test away!
 
 describe('the enhancer', () => {
-   describe('repair()', () => {
+   describe('repair(item)', () => {
       it('should restore the durability', () => {
          //arrange
             const item = {
@@ -21,7 +21,7 @@ describe('the enhancer', () => {
       });
    });
 
-   describe('succeed()', () => {
+   describe('succeed(item)', () => {
       it('should increase enhancement by 1 if not 20', () => {
          const item = {
             name: '',
@@ -47,6 +47,46 @@ describe('the enhancer', () => {
             durability: 0
          })
 
+      })
+   })
+
+   describe('fail(item)', () => {
+      it('should decrease durability according to enhancement', () => {
+         const item = {
+            name: '',
+            enhancement: 14,
+            durability: 90
+         };
+         const result = enhancer.fail(item);
+         expect(result).toEqual({
+            name: '',
+            enhancement: 14,
+            durability: 85
+         })
+
+         const weapon = {
+            name: '',
+            enhancement: 15,
+            durability: 50
+         }
+         const weaponresult = enhancer.fail(weapon);
+         expect(weaponresult).toEqual({
+            name: '',
+            enhancement: 15,
+            durability: 40
+         })
+
+         const sword = {
+            name: '',
+            enhancement: 17,
+            durability: 20
+         }
+         const swordresult = enhancer.fail(sword);
+         expect(swordresult).toEqual({
+            name: '',
+            enhancement: 16,
+            durability: 10
+         })
       })
    })
 });
